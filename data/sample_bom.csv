@@ -1,0 +1,7 @@
+part_id,name,parent_id,quantity,unit_weight,material
+P001,Vélo,,1,0,ASSEMBLY
+P002,Roue avant,P001,1,1.2,Aluminium
+P003,Roue arrière,P001,1,1.3,Aluminium
+P004,Cadre,P001,1,2.5,Acier
+P005,Pneu avant,P002,1,0.7,Caoutchouc
+P006,Jante avant,P002,1,0.5,Aluminium
