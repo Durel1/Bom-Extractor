@@ -1,5 +1,5 @@
 from bom_extractor.application.use_cases.import_bom import ImportBomUseCase
-from bom_extractor.parser import BomCsvParser
+from bom_extractor.infrastructure.parsers.parser import BomCsvParser
 from bom_extractor.validator import BomValidator
 from bom_extractor.infrastructure.persistence.database import create_session_factory
 from bom_extractor.infrastructure.persistence.sql_repository import SqlBomRepository
