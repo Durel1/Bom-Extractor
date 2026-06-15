@@ -1,0 +1,86 @@
+@startuml
+title BOM Extractor PLM - Class Diagram
+
+class Part {
+  +part_id: str
+  +name: str
+  +parent_id: str
+  +quantity: int
+  +unit_weight: float
+  +material: str
+}
+
+interface BomParser {
+  +parse(file_path: str): list[Part]
+}
+
+class CsvBomParser {
+  +parse(file_path: str): list[Part]
+}
+
+class JsonBomParser {
+  +parse(file_path: str): list[Part]
+}
+
+class ParserFactory {
+  +create(file_type: str): BomParser
+}
+
+class BomValidator {
+  +validate(parts: list[Part]): void
+}
+
+interface BomRepository {
+  +save_all(parts: list[Part]): void
+  +find_all(): list[Part]
+}
+
+class SqlBomRepository {
+  +save_all(parts: list[Part]): void
+  +find_all(): list[Part]
+}
+
+class PartEntity {
+  +part_id: str
+  +name: str
+  +parent_id: str
+  +quantity: int
+  +unit_weight: float
+  +material: str
+}
+
+class ImportBomUseCase {
+  -parser: BomParser
+  -validator: BomValidator
+  -repository: BomRepository
+  +execute(file_path: str): void
+}
+
+class WeightCalculationService {
+  +calculate_total_weight(root_part_id: str, parts: list[Part]): float
+}
+
+class BomAnalysisService {
+  +count_parts(parts: list[Part]): int
+  +get_materials(parts: list[Part]): set[str]
+  +count_parts_by_material(parts: list[Part]): dict
+  +get_tree_depth(root_part_id: str, parts: list[Part]): int
+}
+
+BomParser <|.. CsvBomParser
+BomParser <|.. JsonBomParser
+BomRepository <|.. SqlBomRepository
+
+ParserFactory ..> BomParser
+CsvBomParser ..> Part
+JsonBomParser ..> Part
+BomValidator ..> Part
+SqlBomRepository ..> Part
+SqlBomRepository ..> PartEntity
+ImportBomUseCase --> BomParser
+ImportBomUseCase --> BomValidator
+ImportBomUseCase --> BomRepository
+WeightCalculationService ..> Part
+BomAnalysisService ..> Part
+
+@enduml
