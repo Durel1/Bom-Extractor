@@ -1,4 +1,4 @@
-from bom_extractor.parser import BomCsvParser
+from bom_extractor.infrastructure.parsers.parser import BomCsvParser
 
 
 def test_parse_returns_parts():
